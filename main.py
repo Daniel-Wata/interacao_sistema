@@ -101,7 +101,7 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
   options.add_argument("--start-maximized")
   options.add_argument('--headless')
   nome_pasta = "relatorios_"+cliente
-  pasta_destino = rf"C:\Users\daniel.watanabe\Documents\Script\sistema\{nome_pasta}"
+  pasta_destino = rf"{nome_pasta}"
   #params = {'behavior': 'allow', 'downloadPath': r'C:/Users/daniel.watanabe/Documents/Script/sistema/'+pasta_destino}
 
 
@@ -119,7 +119,7 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
   len_contas = len(lista_contas)*len(quinzenas)
 
   #SITE FRACTIONWEB
-  wd.get("http://www.jadlog.com.br/FractionWeb/login.jad")
+  wd.get("URL")
 
   #LOGIN
   usuario = wd.find_element_by_id('id_usuario').send_keys(usuario)
@@ -130,7 +130,7 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
   for quinzena in quinzenas:
     for conta in lista_contas:
       count+=1
-      wd.get('http://www.jadlog.com.br/FractionWeb/pages/folhaApoio/folha.jad')
+      wd.get('URL')
       
 
       #CLICA EM CORRENTISTA E/D
@@ -232,7 +232,7 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
   
 
   wd = webdriver.Chrome(options=options)
-  wd.get("http://www.jadlog.com.br/FractionWeb/login.jad")
+  wd.get("URL")
 
   #LOGIN
   WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, 'id_usuario'))).send_keys(usuario)
@@ -245,7 +245,7 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
   counter = 1
   for cte in lista_ctes:
       #site para buscar CTE
-      wd.get("http://www.jadlog.com.br/FractionWeb/jad/pesquisar?execution=e1s1")
+      wd.get("URL")
       #Inserir CTE e buscar
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "frmPesquisa:cte"))).send_keys(cte)
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "frmPesquisa:id_enviar"))).click()

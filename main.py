@@ -16,13 +16,13 @@ def selecionar_cliente():
   '''
   Função para selecionar a lista de contas e o cliente a ser analisado
   '''
-  clientes = {'havan': ['00000', '00000','00000', '00000'], 
-              'EDITORA JURIDICA DA BAHIA': ['00000', '00000'], 
-              'olist': ['00000', '00000'],
-              'onofre': ['00000', '00000'],
-              'LESEN': ['00000', '00000'],
-              'MVX': ['00000', '00000'],
-              'riachuelo': ['00000', '00000','00000', '00000','00000', '00000','00000', '00000']}
+  clientes = {'havan': ['024101','024102','024081','024103','024086','024104','024082','024105','024083','024106','024087','024107','024085','024108','024084','024109','024096','024110','024097','024111','024098','024112','024099','024113','024100','024114','024309','024310','024269','024270','024271','024272','024289','024290','024291','024292','024293','024294','024295','024296','024297','024298','024299','024300','024301','024302','024303','024304','024331','024332','024333','024334','024335','024336','024212','024213','024337','024338','024339','024340','024341','024342','024343','024344','024347','024348','024353','024354','024355','024356','024357','024358','024359','024360','024361','024362','024363','024364','024365','024366','024959','024960','024961','024962','024963','024964','024965','024966','024967','024968','024969','024970','024971','024972','024973','024974','024975','024976','024977','024978','024979','024980','024981','024982','024983','024984','024985','024986','024987','024988','024989','024990','024991','024992','024995','024996','024997','024998','024999','025000','025001','025002','025003','025004','025005','025006','025007','025008','025009','025010','025011','025012','025015','025016','025017','025018','024279','024280','024273','024274','024275','024276','024307','024308','024281','024282','024305','024306','024277','024278','024568','024569','024570','024571','024572','024573','024574','024575','024576','024577','024579','024578','024580','024581','024582','024583','024584','024585','024586','024587','024588','024589','024590','024591','024592','024593','024594','024595','024596','024597','023278','024531','025291','025292','025293','025294','025295','025296','025297','025298','025299','025300','025301','025302','025303','025304','025305','025306','025307','025308','025309','025310','025311','025312','025313','025314','025315','025316','025317','025318','025319','025320','025321','025322','025323','025324','025325','025326','025327','025328','025329','025330','025331','025332','025333','025334','025335','025336','025337','025338','025339','025340','025341','025342','025343','025344','025345','025346','025347','025348','025349','025350','025351','025352','025353','025354','025355','025356','025358','025359','025360','025361','025362','025363','025364','025365','025366','025367','025368','025369','025370','025371','025372','025373','025374','025375','025376','025377','025378','025379','025380','025381','025382','025383','025384','025385','025386','025387','025388','025389','025390','025391','024307','024308','024285','024286','024287','024288','024993','024994','025013','025014','025396','025397','025392','025393','025737','025738','025739','025740','025741','025742','025743','025744','025745','025746','025747','025748','025749','025750','025751','025752','025753','025754','026063','026064','026065','026066','026067','026068','026344','026345'], 
+              'EDITORA JURIDICA DA BAHIA': ['020794'], 
+              'olist': ['026876', '026878', '026892', '020868', '026860', '026862', '026864', '026866', '026882', '026904', '026890', '026894', '026896', '026898', '026908', '026910', '026914', '026918', '026920', '028319', '026863', '026865', '026913', '026917', '028318'],
+              'onofre': ['015052', '014950', '020865','015965','015964'],
+              'LESEN': ['016137', '021379'],
+              'MVX': ['015908','014935'],
+              'riachuelo': ['022958','025784','027985','027986','028384','028385','027886','027887','028339','028340','028341','028342','028343','028344','028345','028346','028347','028348','028607','028608','028609','028610','028611','028612','028613','028614','028674']}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
   print("Lista de clientes: ")
@@ -101,7 +101,7 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
   options.add_argument("--start-maximized")
   options.add_argument('--headless')
   nome_pasta = "relatorios_"+cliente
-  pasta_destino = rf"{nome_pasta}"
+  pasta_destino = rf"C:\Users\daniel.watanabe\Documents\Script\sistema\{nome_pasta}"
   #params = {'behavior': 'allow', 'downloadPath': r'C:/Users/daniel.watanabe/Documents/Script/sistema/'+pasta_destino}
 
 
@@ -113,13 +113,10 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
 
   #INPUTS
   razao_social = cliente
-
-
-
   len_contas = len(lista_contas)*len(quinzenas)
 
   #SITE FRACTIONWEB
-  wd.get("URL")
+  wd.get("http://www.jadlog.com.br/FractionWeb/login.jad")
 
   #LOGIN
   usuario = wd.find_element_by_id('id_usuario').send_keys(usuario)
@@ -130,16 +127,15 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
   for quinzena in quinzenas:
     for conta in lista_contas:
       count+=1
-      wd.get('URL')
+      wd.get('http://www.jadlog.com.br/FractionWeb/pages/folhaApoio/folha.jad')
       
 
       #CLICA EM CORRENTISTA E/D
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='opt_tipo_boleto_1']/div[2]"))).click()
       wd.find_element_by_xpath("//*[@id='opt_4']").click()
-      time.sleep(0.5)
 
       #CLICA EM ADICIONAR
-      wd.find_element_by_xpath("//*[@id='btn_adicionar']").click()
+      WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='btn_adicionar']"))).click()
 
       #Escreve a razão social
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='form_correntista:pessoa_nome_fantasia']"))).send_keys(razao_social)
@@ -182,8 +178,8 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
         print(f"Conta:{conta}   Quinzena: {quinzena} {count}/{len_contas} OK")
         
 
-      except:
-        print(f"Erro na extração da conta: {conta} e quinzena: {quinzena}.")
+      except Exception as e:
+        print(f"Erro na extração da conta: {conta} e quinzena: {quinzena}.\nerro:{e}")
       
 
     time.sleep(3)
@@ -232,7 +228,7 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
   
 
   wd = webdriver.Chrome(options=options)
-  wd.get("URL")
+  wd.get("http://www.jadlog.com.br/FractionWeb/login.jad")
 
   #LOGIN
   WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, 'id_usuario'))).send_keys(usuario)
@@ -244,8 +240,9 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
   dados_final = {}
   counter = 1
   for cte in lista_ctes:
+    try:
       #site para buscar CTE
-      wd.get("URL")
+      wd.get("http://www.jadlog.com.br/FractionWeb/jad/pesquisar?execution=e1s1")
       #Inserir CTE e buscar
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "frmPesquisa:cte"))).send_keys(cte)
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "frmPesquisa:id_enviar"))).click()
@@ -261,7 +258,7 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
       colunas = len(wd.find_elements(By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr[1]/td"))
       dados = {}
 
-      #pegar nome do Tomador
+      
 
       #pegar dados de uf e cep
       dados["UF Origem"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt196_content']/table/tbody/tr[3]/td[2]/label").text.split("/")[1].strip()
@@ -283,6 +280,10 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
         dados["ESTORNADO"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt183_header']/span").text
       except:
         dados["ESTORNADO"] = 'NAO'
+      
+      #Pegar CO Emissor
+      
+      dados["CO Emissor"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:trackHistorico_data']/tr[1]/td[4]/span").text
 
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "j_idt175:j_idt347_toggler"))).click()
       
@@ -320,7 +321,10 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
       dados_final[cte] = dados
       print(cte + f" {counter}/{num_ctes}   OK")
       counter += 1
-
+    except:
+      print(cte + f" {counter}/{num_ctes}   ERRO")
+      counter += 1
+      pass
   #fechar pagina
   wd.close()
 

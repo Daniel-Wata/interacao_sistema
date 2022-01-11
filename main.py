@@ -147,16 +147,16 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
 
 
       #ENVIAR CONTA
-      element = WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='form_correntista:data_table_correntista:j_idt189:filter']")))
+      element = WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='form_correntista:data_table_correntista:j_idt192:filter']")))
       element.send_keys(conta)
       time.sleep(1)
       
       try:
-        wd.find_element_by_xpath("//*[@id='form_correntista:data_table_correntista:0:j_idt185']").click() #CLICA NO PRIMEIRO MATCH
+        wd.find_element_by_xpath("//*[@id='form_correntista:data_table_correntista:0:j_idt188']").click() #CLICA NO PRIMEIRO MATCH
         time.sleep(0.5)
 
         #DEFINE A QUINZENA
-        wd.find_element(By.ID, "j_idt252_input").send_keys(quinzena)
+        wd.find_element(By.ID, "j_idt255_input").send_keys(quinzena)
 
         #WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='tipo_correntista']/tbody/tr[1]/td[1]/div/div[2]"))).click()
         time.sleep(0.5)
@@ -174,7 +174,6 @@ def extrair_relatorios(usuario, senha, cliente, lista_contas, quinzenas):
         wd.find_element_by_xpath("//a[contains(@onclick,'id_exportar_excel_populado')]").click() #BAIXAR RELATORIO
         WebDriverWait(wd, 100).until(EC.invisibility_of_element_located((By.ID, "id_bloqueio_folha"))) #Espera a telinha de loading desaparecer
 
-        
         print(f"Conta:{conta}   Quinzena: {quinzena} {count}/{len_contas} OK")
         
 
@@ -248,59 +247,61 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
       WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "frmPesquisa:id_enviar"))).click()
 
       #Pegar tabela Informações da Remessa
-      WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr")))
+      WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[1]/tbody/tr")))
+
 
       #Pegar linhas
-      linhas = wd.find_elements(By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr")
+      linhas = wd.find_elements(By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[1]/tbody/tr")
       num_linhas = len(linhas)
 
-      #colunas = WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr/td")))
-      colunas = len(wd.find_elements(By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr[1]/td"))
+      #colunas = WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt178:j_idt287_content']/table[1]/tbody/tr/td")))
+      colunas = len(wd.find_elements(By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[1]/tbody/tr[1]/td"))
       dados = {}
 
       
 
       #pegar dados de uf e cep
-      dados["UF Origem"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt196_content']/table/tbody/tr[3]/td[2]/label").text.split("/")[1].strip()
-      dados["Cep Origem"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt196_content']/table/tbody/tr[5]/td[2]/label").text
-      dados["UF Destino"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt215_content']/table/tbody/tr[3]/td[2]/label").text.split("/")[1].strip()[:2]
-      dados["Cep Destino"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt215_content']/table/tbody/tr[5]/td[2]/label").text
+      dados["UF Origem"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt199_content']/table/tbody/tr[3]/td[2]/label").text.split("/")[1].strip()
+      dados["Cep Origem"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt199_content']/table/tbody/tr[5]/td[2]/label").text
+      dados["UF Destino"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt218_content']/table/tbody/tr[3]/td[2]/label").text.split("/")[1].strip()[:2]
+      dados["Cep Destino"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt218_content']/table/tbody/tr[5]/td[2]/label").text
 
       #pegar dacte
-      dados["Dacte"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[2]/tbody/tr/td[2]/label[2]").text
-      dados["Tomador"] = wd.find_element(By.XPATH, "//*[@id='j_idt175']/table[1]/tbody/tr/td[2]/label[2]").text
+      dados["Dacte"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[2]/tbody/tr/td[2]/label[2]").text
+      dados["Tomador"] = wd.find_element(By.XPATH, "//*[@id='j_idt178']/table[1]/tbody/tr/td[2]/label[2]").text
       for l in range(1,num_linhas + 1):
           for c in range(1,colunas+1):
               try:
-                  dado_lista = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt287_content']/table[1]/tbody/tr["+str(l)+"]/td["+str(c)+"]").text.split(":")
-                  dados[dado_lista[0]] = dado_lista[1].strip()
+                  dado_key = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[1]/tbody/tr["+str(l)+"]/td["+str(c)+"]/label[1]").text.split(':')[0].strip()
+                  dado_value = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt290_content']/table[1]/tbody/tr["+str(l)+"]/td["+str(c)+"]/label[2]").text
+                  dados[dado_key] = dado_value.strip()
               except:
                   pass
       try:
-        dados["ESTORNADO"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:j_idt183_header']/span").text
+        dados["ESTORNADO"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:j_idt183_header']/span").text
       except:
         dados["ESTORNADO"] = 'NAO'
       
       #Pegar CO Emissor
       
-      dados["CO Emissor"] = wd.find_element(By.XPATH, "//*[@id='j_idt175:trackHistorico_data']/tr[1]/td[4]/span").text
-
-      WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "j_idt175:j_idt347_toggler"))).click()
+      dados["CO Emissor"] = wd.find_element(By.XPATH, "//*[@id='j_idt178:trackHistorico_data']/tr[1]/td[4]/span").text
+      
+      WebDriverWait(wd, 20).until(EC.element_to_be_clickable((By.ID, "j_idt178:j_idt350_toggler"))).click()
       
       #Pegar tabela componentes do frete
-      WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt175:trackComponeteFrete_data']/tr")))
+      WebDriverWait(wd, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='j_idt178:trackComponeteFrete_data']/tr")))
 
       #Pegar linhas
-      linhas = wd.find_elements(By.XPATH, "//*[@id='j_idt175:trackComponeteFrete_data']/tr")
+      linhas = wd.find_elements(By.XPATH, "//*[@id='j_idt178:trackComponeteFrete_data']/tr")
       num_linhas = len(linhas)
-      colunas = len(wd.find_elements(By.XPATH, "//*[@id='j_idt175:trackComponeteFrete_data']/tr[1]/td"))
+      colunas = len(wd.find_elements(By.XPATH, "//*[@id='j_idt178:trackComponeteFrete_data']/tr[1]/td"))
 
       #Pegar todos os componentes de frete
       lista_temp = []
       time.sleep(0.5)
       for a in range(1,num_linhas + 1):
           for b in range(1,colunas+1):
-              dado = wd.find_element(By.XPATH, "//*[@id='j_idt175:trackComponeteFrete_data']/tr["+str(a)+"]/td["+str(b)+"]").text
+              dado = wd.find_element(By.XPATH, "//*[@id='j_idt178:trackComponeteFrete_data']/tr["+str(a)+"]/td["+str(b)+"]").text
               lista_temp.append(dado)
 
       lista_chaves = []
@@ -317,7 +318,7 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
       for item in lista_chaves:
           dados["COMPONENTES;"+item] = lista_valores[lista_chaves.index(item)]
 
-  
+      
       dados_final[cte] = dados
       print(cte + f" {counter}/{num_ctes}   OK")
       counter += 1
@@ -342,8 +343,8 @@ def buscar_ctes(usuario, senha, lista_ctes, output ='ctes.xlsx'):
 
   df_completo.index.names = ['Cte']
 
-  df_final = df_completo.drop(['Descrição','Lista','Recebedor','Entrega'],axis='columns')
-  df_final = df_final.rename(columns={'Peso': 'Peso Real'})
+  #df_final = df_completo.drop(['Descrição','Lista','Recebedor','Entrega'],axis='columns')
+  df_final = df_completo.rename(columns={'Peso': 'Peso Real'})
   df_final.to_excel(output)
   print("-----FINALIZADO-----")
 
